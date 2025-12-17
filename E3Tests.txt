@@ -1,0 +1,29 @@
+-- Test 1
+    let
+      expression = LamDef [] (LamApp (LamVar 1) (LamApp (LamVar 2) (LamVar 3)))
+      expectedUnparsedExpression = "x1x2x3"
+      calculatedUnparsedExpression = unparse expression
+
+    if calculatedUnparsedExpression == expectedUnparsedExpression
+        then putStrLn "Test Passed"
+        else putStrLn "Test Failed"
+
+-- Test 2
+    let
+      expression = LamDef [] (LamApp (LamApp (LamVar 1) (LamVar 2)) (LamMacro "F"))
+      expectedUnparsedExpression = "x1x2F"
+      calculatedUnparsedExpression = unparse expression
+
+    if calculatedUnparsedExpression == expectedUnparsedExpression
+        then putStrLn "Test Passed"
+        else putStrLn "Test Failed"
+
+-- Test 3
+    let
+      expression = LamDef [("F",LamAbs 1 (LamVar 1))] (LamAbs 2 (LamApp (LamVar 2) (LamMacro "F")))
+      expectedUnparsedExpression = "defF=λx1→x1inλx2→x2F"
+      calculatedUnparsedExpression = unparse expression
+
+    if calculatedUnparsedExpression == expectedUnparsedExpression
+        then putStrLn "Test Passed"
+        else putStrLn "Test Failed"

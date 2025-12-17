@@ -1,0 +1,61 @@
+-------------------------------------- Test 1 - Grid size 4 with 3 atoms
+
+  let 
+    test1AtomNum = 3
+    test1ExpectedAtoms = [ (2,2) , (3,1) , (4,5) ]
+    test1Interactions = [ (EP West 1 L,EP East 1 R),
+                                  (EP West 2 L,EP West 4 R),
+                                  (EP West 3 L,EP West 3 R),
+                                  (EP West 4 L,EP South 1 R),
+                                  (EP West 1 R,EP East 1 L),
+                                  (EP West 2 R,EP East 3 L),
+                                  (EP West 3 R,EP West 3 L),
+                                  (EP West 4 R,EP West 2 L),
+                                  (EP East 1 L,EP West 1 R),
+                                  (EP East 2 L,EP South 4 R),
+                                  (EP East 3 L,EP West 2 R),
+                                  (EP East 4 L,EP East 3 R),
+                                  (EP East 1 R,EP West 1 L),
+                                  (EP East 2 R,EP South 2 L),
+                                  (EP East 3 R,EP East 4 L),
+                                  (EP East 4 R,EP South 4 L),
+                                  (EP South 1 L,EP South 2 R),
+                                  (EP South 2 L,EP East 2 R),
+                                  (EP South 3 L,EP South 3 R),
+                                  (EP South 4 L,EP East 4 R),
+                                  (EP South 1 R,EP West 4 L),
+                                  (EP South 2 R,EP South 1 L),
+                                  (EP South 3 R,EP South 3 L),
+                                  (EP South 4 R,EP East 2 L)]
+    test1CalculatedAtoms = solveTBB test1AtomNum test1Interactions
+
+  if amIRightE2 test1CalculatedAtoms test1ExpectedAtoms
+    then putStrLn "Test Passed"
+    else putStrLn "Test Failed"
+
+-------------------------------------- Test 2 - Grid size 6 with 6 atoms
+
+  let 
+    test2AtomNum = 6
+    test2ExpectedAtoms = [ (1,1) , (2,2) , (3,3) , (4,4) , (5,5) , (6,6) ]
+    test2Interactions = [(EP East 1 L,EP East 1 R),(EP East 1 R,EP East 1 L),(EP East 2 L,EP South 6 R),(EP East 2 R,EP East 3 L),(EP East 3 L,EP East 2 R),(EP East 3 R,EP East 5 L),(EP East 4 L,EP South 5 R),(EP East 4 R,EP South 4 L),(EP East 5 L,EP East 3 R),(EP East 5 R,EP South 5 L),(EP East 6 L,EP South 4 R),(EP East 6 R,EP South 6 L),(EP West 1 L,EP West 1 R),(EP West 1 R,EP West 1 L),(EP West 2 L,EP West 3 R),(EP West 2 R,EP South 1 L),(EP West 3 L,EP West 5 R),(EP West 3 R,EP West 2 L),(EP West 4 L,EP South 3 R),(EP West 4 R,EP South 2 L),(EP West 5 L,EP South 2 R),(EP West 5 R,EP West 3 L),(EP West 6 L,EP South 1 R),(EP West 6 R,EP South 3 L),(EP South 1 L,EP West 2 R),(EP South 1 R,EP West 6 L),(EP South 2 L,EP West 4 R),(EP South 2 R,EP West 5 L),(EP South 3 L,EP West 6 R),(EP South 3 R,EP West 4 L),(EP South 4 L,EP East 4 R),(EP South 4 R,EP East 6 L),(EP South 5 L,EP East 5 R),(EP South 5 R,EP East 4 L),(EP South 6 L,EP East 6 R),(EP South 6 R,EP East 2 L)]
+    test2CalculatedAtoms = solveTBB test2AtomNum test2Interactions
+
+  if amIRightE2 test2CalculatedAtoms test2ExpectedAtoms
+    then putStrLn "Test Passed"
+    else putStrLn "Test Failed"
+
+
+-------------------------------------- Test 3 - Negative number of atoms
+
+  let 
+    test3AtomNum = -1
+    test3Interactions = emptyRays 5
+
+  print (solveTBB test3AtomNum test3Interactions)
+
+Test 3
+E2SolveTBB.hs: Number of atoms cannot be negative
+CallStack (from HasCallStack):
+  error, called at C:\\\\Users\james\Documents\.UNI\Year 2\COMP2209 - Programming 3\CW\Haskell\E2SolveTBB.hs:354:19 in main:SolveTBB
+

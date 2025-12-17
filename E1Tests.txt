@@ -1,0 +1,116 @@
+-- Check whether the two interaction lists are equal, disregarding order
+-- This is to check that a solution that ive come up with matches the input
+amIRight :: [(EdgePoint, EdgePoint)] -> [(EdgePoint, EdgePoint)] -> Bool
+amIRight xs ys = all (`elem` ys) xs && all (`elem` xs) ys
+
+-------------------------------------- Test 1 - Grid size 4 with 3 atoms
+  let 
+    test1GridSize = 4
+    test1Atoms = [ (2,2) , (3,1) , (4,5) ]
+    test1ExpectedInteractions = [ (EP West 1 L,EP East 1 R),
+                                  (EP West 2 L,EP West 4 R),
+                                  (EP West 3 L,EP West 3 R),
+                                  (EP West 4 L,EP South 1 R),
+                                  (EP West 1 R,EP East 1 L),
+                                  (EP West 2 R,EP East 3 L),
+                                  (EP West 3 R,EP West 3 L),
+                                  (EP West 4 R,EP West 2 L),
+                                  (EP East 1 L,EP West 1 R),
+                                  (EP East 2 L,EP South 4 R),
+                                  (EP East 3 L,EP West 2 R),
+                                  (EP East 4 L,EP East 3 R),
+                                  (EP East 1 R,EP West 1 L),
+                                  (EP East 2 R,EP South 2 L),
+                                  (EP East 3 R,EP East 4 L),
+                                  (EP East 4 R,EP South 4 L),
+                                  (EP South 1 L,EP South 2 R),
+                                  (EP South 2 L,EP East 2 R),
+                                  (EP South 3 L,EP South 3 R),
+                                  (EP South 4 L,EP East 4 R),
+                                  (EP South 1 R,EP West 4 L),
+                                  (EP South 2 R,EP South 1 L),
+                                  (EP South 3 R,EP South 3 L),
+                                  (EP South 4 R,EP East 2 L)]
+    test1CalculatedInteractions = calcInteractions test1GridSize test1Atoms
+
+  if amIRight test1ExpectedInteractions test1CalculatedInteractions
+    then putStrLn "Test Passed"
+    else putStrLn "Test Failed"
+
+-------------------------------------- Test 2 - Grid size 6 with 6 atoms
+  let 
+    test2GridSize = 6
+    test2Atoms = [ (1,1) , (2,2) , (3,3) , (4,4) , (5,5) , (6,6) ]
+    test2ExpectedInteractions = [(EP East 1 L,EP East 1 R),(EP East 1 R,EP East 1 L),(EP East 2 L,EP South 6 R),(EP East 2 R,EP East 3 L),(EP East 3 L,EP East 2 R),(EP East 3 R,EP East 5 L),(EP East 4 L,EP South 5 R),(EP East 4 R,EP South 4 L),(EP East 5 L,EP East 3 R),(EP East 5 R,EP South 5 L),(EP East 6 L,EP South 4 R),(EP East 6 R,EP South 6 L),(EP West 1 L,EP West 1 R),(EP West 1 R,EP West 1 L),(EP West 2 L,EP West 3 R),(EP West 2 R,EP South 1 L),(EP West 3 L,EP West 5 R),(EP West 3 R,EP West 2 L),(EP West 4 L,EP South 3 R),(EP West 4 R,EP South 2 L),(EP West 5 L,EP South 2 R),(EP West 5 R,EP West 3 L),(EP West 6 L,EP South 1 R),(EP West 6 R,EP South 3 L),(EP South 1 L,EP West 2 R),(EP South 1 R,EP West 6 L),(EP South 2 L,EP West 4 R),(EP South 2 R,EP West 5 L),(EP South 3 L,EP West 6 R),(EP South 3 R,EP West 4 L),(EP South 4 L,EP East 4 R),(EP South 4 R,EP East 6 L),(EP South 5 L,EP East 5 R),(EP South 5 R,EP East 4 L),(EP South 6 L,EP East 6 R),(EP South 6 R,EP East 2 L)]
+    test2CalculatedInteractions = calcInteractions test2GridSize test2Atoms
+
+  if amIRight test1ExpectedInteractions test1CalculatedInteractions
+    then putStrLn "Test Passed"
+    else putStrLn "Test Failed"
+
+-------------------------------------- Test 3 - Grid size -1
+  let 
+    test3GridSize = -1
+    test3Atoms = [ (1,1) , (2,2) , (3,3) , (4,4) , (5,5) , (6,6) ]
+
+  print (calcInteractions test3GridSize test3Atoms)
+
+E1Submit.hs: The grid size cannot be negative or 0
+CallStack (from HasCallStack):
+  error, called at C:\\\\Users\james\Documents\.UNI\Year 2\COMP2209 - Programming 3\CW\Haskell\E1Submit.hs:18:13 in main:Main
+-------------------------------------- Test 4 - Atom out of bounds
+  let
+    test4GridSize = 5
+    test4Atoms = [ (1,1) , (2,2) , (3,3) , (4,4) , (5,5) , (6,6) ]
+
+  print (calcInteractions test4GridSize test4Atoms)
+
+E1Submit.hs: Atoms cannot be out of bounds
+CallStack (from HasCallStack):
+  error, called at C:\\\\Users\james\Documents\.UNI\Year 2\COMP2209 - Programming 3\CW\Haskell\E1Submit.hs:19:38 in main:Main
+
+-------------------------------------- Test 5 - Empty Grid
+  let
+    test5GridSize = 8
+    test5Atoms = []
+    test5ExpectedInteractions = emptyRays test5GridSize
+    test5CalculatedInteractions = calcInteractions test5GridSize test5Atoms
+
+  if amIRight test5ExpectedInteractions test5CalculatedInteractions
+    then putStrLn "Test Passed"
+    else putStrLn "Test Failed"
+
+-------------------------------------- Test 6 - Atom border
+  let 
+    test6GridSize = 4
+    test6Atoms = [ (1,1) , (2,1) , (2,3) , (3,1) , (3,5) , (4,1) , (4,3) , (4,5) , (4,7) ]
+    test6ExpectedInteractions = [ (EP West 1 L,EP West 1 R),
+                                  (EP West 2 L,EP West 2 R),
+                                  (EP West 3 L,EP West 3 R),
+                                  (EP West 4 L,EP West 4 R),
+                                  (EP West 1 R,EP West 1 L),
+                                  (EP West 2 R,EP West 2 L),
+                                  (EP West 3 R,EP West 3 L),
+                                  (EP West 4 R,EP West 4 L),
+                                  (EP East 1 L,EP East 1 R),
+                                  (EP East 2 L,EP East 2 R),
+                                  (EP East 3 L,EP East 3 R),
+                                  (EP East 4 L,EP East 4 R),
+                                  (EP East 1 R,EP East 1 L),
+                                  (EP East 2 R,EP East 2 L),
+                                  (EP East 3 R,EP East 3 L),
+                                  (EP East 4 R,EP East 4 L),
+                                  (EP South 1 L,EP South 1 R),
+                                  (EP South 2 L,EP South 2 R),
+                                  (EP South 3 L,EP South 3 R),
+                                  (EP South 4 L,EP South 4 R),
+                                  (EP South 1 R,EP South 1 L),
+                                  (EP South 2 R,EP South 2 L),
+                                  (EP South 3 R,EP South 3 L),
+                                  (EP South 4 R,EP South 4 L )]
+    test6CalculatedInteractions = calcInteractions test6GridSize test6Atoms
+
+  if amIRight test6ExpectedInteractions test6CalculatedInteractions
+    then putStrLn "Test Passed"
+    else putStrLn "Test Failed"
+
